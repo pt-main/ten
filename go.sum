@@ -16,3 +16,5 @@ github.com/pt-main/tap v0.7.0 h1:1QALUhcO8hOpJT1MwPJ+bxAT7zuKenWSyI6Ij0r7AWM=
 github.com/pt-main/tap v0.7.0/go.mod h1:oL9GBibdabChx8EbP2M2+c22CnWBF+7xuZ40hIkHtnI=
 github.com/pt-main/tap v0.7.1 h1:tl0QImOjr0asukSQVXzI5KVrE0VoclB1EljW2QAqsBw=
 github.com/pt-main/tap v0.7.1/go.mod h1:oL9GBibdabChx8EbP2M2+c22CnWBF+7xuZ40hIkHtnI=
+github.com/pt-main/tap v0.7.2 h1:4HHIPydzCm3Txbx6mdyeIsUiXZsl7MfuQpI4/mRqL6E=
+github.com/pt-main/tap v0.7.2/go.mod h1:oL9GBibdabChx8EbP2M2+c22CnWBF+7xuZ40hIkHtnI=
