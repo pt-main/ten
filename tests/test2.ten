@@ -1,5 +1,5 @@
 ((?CONFIG
-    documentation Greeting generator
+    documentation Greeting generator\nOfficial template test and example
 )){{?CODE
     set greeting = Hello
     make upper user = user_caps
