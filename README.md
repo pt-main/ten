@@ -44,7 +44,7 @@ Requires Go 1.24.13 or later.
 Transform a template file with flags and placeholders:
 
 ```bash
-ten process <template_file> [placeholders] [flags] [--O|--OUT:output_file]
+ten process <template_file> [placeholders] [flags] [--O|--OUT=output_file]
 ```
 
 **Examples:**
@@ -57,14 +57,14 @@ ten process template.ten --name=Alice --prefix=Hello
 ten process template.ten --name=Bob --OUT=output.txt
 
 # With flags
-ten process template.ten --user=admin --debug --production --OUT:result.txt
+ten process template.ten --user=admin --debug --production --OUT=result.txt
 ```
 
 **Arguments:**
 - `template_file` – path to `.ten` template
 - `--name=value` – placeholder assignments (lowercase keys)
 - `--flag` – boolean flags (lowercase keys, no value)
-- `--O:file` or `--OUT:file` – write output to file instead of stdout
+- `--O=file` or `--OUT=file` – write output to file instead of stdout
 
 #### Docs
 
