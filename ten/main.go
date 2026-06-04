@@ -7,9 +7,12 @@ import (
 	"github.com/pt-main/lc/system"
 )
 
-const Version = "0.8.2"
+// Version of the template engine.
+const Version = "0.9.1"
 
-// Create engine for trmplate engine
+// NewTemplateEngine creates and initializes a new system.Engine instance
+// configured with the lexer rules for config, code, placeholder, and raw blocks.
+// The engine is ready to process template text after registering commands.
 func NewTemplateEngine() *system.Engine {
 	p := parsing.NewLexer([]parsing.LexerRule{
 		{
@@ -33,7 +36,9 @@ func NewTemplateEngine() *system.Engine {
 	return e
 }
 
-// New Template engine.
+// NewTemplate creates a new Language instance and an associated system.Engine.
+// The engine is pre‑registered with commands for "placeholder", "code", "config",
+// and "raw". Returns the Language instance, the Engine, or an error if language creation fails.
 func NewTemplate(
 	flags []string,
 	placeholders map[string]string,
@@ -53,6 +58,32 @@ func NewTemplate(
 	return lang, engine, nil
 }
 
+// TemplateReplace processes the given template string using the specified flags,
+// placeholders, and configuration. It returns the final rendered string or an error.
+//
+// Parameters:
+//   - template: raw template text containing special blocks:
+//     ((?CONFIG ... )) – configuration overrides,
+//     {{?CODE ... }}   – code/logic instructions,
+//     [[? ... ]]       – placeholders.
+//   - flags: list of string flags that can be tested in conditions.
+//   - placeholders: initial key‑value map for template source variables.
+//   - config: configuration overrides for the language behaviour (e.g. comment markers,
+//     string delimiters). May be nil to use defaults.
+//
+// Returns:
+//   - The fully processed template as a string.
+//   - Non‑nil error if parsing, logic evaluation, or processing fails.
+//
+// Example:
+//
+//	result, err := TemplateReplace(
+//	    "Hello [[? name if has name else World]]!",
+//	    []string{},
+//	    map[string]string{"name": "Alice"},
+//	    nil,
+//	)
+//	// result == "Hello Alice!"
 func TemplateReplace(
 	template string,
 	flags []string,

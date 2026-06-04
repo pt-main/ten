@@ -7,7 +7,7 @@ import (
 func cli() error {
 	p := tap.NewParser("ten", `[?MA]╭───────[?RT] [?BE]Ten cli[?RT]
 [?MA]│[?RT]    Ten - Template Engine.
-[?MA]│[?RT]    Ten cli [[?BE]v`+Version+`[?RT]]
+[?MA]│[?RT]    Ten cli [[?YW]v`+Version+`[?RT]]
 [?MA]│[?RT]    Only [?YW]humanmade[?RT], By [?YW]Pt[?RT].
 [?MA]╰───────[?RT]`, []string{"h", "help"},
 		tap.NewParserConfig("", "", "", "", "", ""))

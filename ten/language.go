@@ -2,7 +2,9 @@ package ten
 
 import "slices"
 
-// Structure of TemplateLanguage
+// Language represents the template language instance holding configuration,
+// template sources, flags, and logical scope.
+// Fields are unexported; use NewLanguage to create an instance.
 type Language struct {
 	flags          []string
 	templateSource map[string]string
@@ -10,7 +12,14 @@ type Language struct {
 	logic_scope    map[string]bool
 }
 
-// Create new template language
+// NewLanguage creates a new Language instance with the provided flags,
+// template source map, and configuration map.
+// If flags is nil, an empty slice is used. If templateSource is nil,
+// an empty map is used. If config is nil, default configuration is applied.
+// Default configuration keys: "pre_plus", "post_plus", "raw", "string_start",
+// "string_end", "ALPHA", "comment", "documentation".
+// Missing keys in config are filled with defaults.
+// The templateSource map is guaranteed to have a "nil" key with empty string.
 func NewLanguage(
 	flags []string,
 	templateSource map[string]string,
