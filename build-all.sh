@@ -12,7 +12,7 @@ PLATFORMS=(
     "darwin/arm64"
 )
 
-cd cli
+cd cmd/cli
 
 for PLATFORM in "${PLATFORMS[@]}"; do
     GOOS=${PLATFORM%/*}
@@ -28,4 +28,4 @@ for PLATFORM in "${PLATFORMS[@]}"; do
         exit 1
     fi
 done
-echo "Done. Binaries in ./bin/"
+echo "Done. Binaries in ./cmd/bin/"
