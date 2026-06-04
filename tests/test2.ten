@@ -1,0 +1,10 @@
+((?CONFIG
+    documentation Greeting generator
+)){{?CODE
+    set greeting = Hello
+    make upper user = user_caps
+    compare user_caps == nil = isEmpty
+    place raw:User if logic isEmpty else user_caps = block1
+    place greeting if not has msg else msg = msg
+    add msg raw:,\s block1 = result
+}}[[? result ]]!
