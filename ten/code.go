@@ -1,4 +1,4 @@
-package main
+package ten
 
 import (
 	"errors"
@@ -13,7 +13,7 @@ import (
 
 func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 	_data := strings.TrimSpace(pn.Parsed[0])
-	_data = _data[len("{{?") : len(_data)-len("}}")]
+	_data = _data[len(_CODE_START_END[0]) : len(_data)-len(_CODE_START_END[1])]
 	if strings.TrimSpace(_data) == "" {
 		return nil
 	}

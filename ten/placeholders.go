@@ -1,4 +1,4 @@
-package main
+package ten
 
 import (
 	"errors"
@@ -96,7 +96,7 @@ invalid:
 
 func (l *Language) placeholder(e *system.Engine, pn parsing.ParsedNode) error {
 	_data := pn.Parsed[0]
-	_data = _data[len("[[?") : len(_data)-len("]]")]
+	_data = _data[len(_PLACEHOLDER_START_END[0]) : len(_data)-len(_PLACEHOLDER_START_END[1])]
 	str, err := l.placeholderEval(_data)
 	if err != nil {
 		return err

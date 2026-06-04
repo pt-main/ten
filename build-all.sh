@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd lib
-
 NAME="ten"
 VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev")
 
@@ -13,6 +11,8 @@ PLATFORMS=(
     "darwin/amd64"
     "darwin/arm64"
 )
+
+cd cli
 
 for PLATFORM in "${PLATFORMS[@]}"; do
     GOOS=${PLATFORM%/*}

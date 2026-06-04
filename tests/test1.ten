@@ -1,9 +1,9 @@
-((?
+((?CONFIG
 	pre_plus /
 	raw >
 	documentation test documentation
 	ALPHA true
-)){{?
+)){{?CODE
 	set star = (⭐)
 	// ===== logics =====
     make lower name = name_lower

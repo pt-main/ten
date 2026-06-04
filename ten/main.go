@@ -1,4 +1,4 @@
-package main
+package ten
 
 import (
 	"github.com/dlclark/regexp2"
@@ -7,24 +7,26 @@ import (
 	"github.com/pt-main/lc/system"
 )
 
+const Version = "0.8.2"
+
 // Create engine for trmplate engine
 func NewTemplateEngine() *system.Engine {
 	p := parsing.NewLexer([]parsing.LexerRule{
 		{
 			Type:    "config",
-			Pattern: regexp2.MustCompile(`\(\(\?\s*([\s\S]*?)\s*\)\)`, 0),
+			Pattern: regexp2.MustCompile(_CONFIG_BLOCK_SYNTAX, 0),
 		},
 		{
 			Type:    "code",
-			Pattern: regexp2.MustCompile(`\{\{\?\s*([\s\S]*?)\s*\}\}`, 0),
+			Pattern: regexp2.MustCompile(_CODE_BLOCK_SYNTAX, 0),
 		},
 		{
 			Type:    "placeholder",
-			Pattern: regexp2.MustCompile(`\[\[\?\s\n*(.*?)\n*\s\]\]`, 0),
+			Pattern: regexp2.MustCompile(_PLACEHOLDER_SYNTAX, 0),
 		},
 		{
 			Type:    "raw",
-			Pattern: regexp2.MustCompile(`(?s)(.+?)(?=\[\[\?|\{\{\?|\(\(\?|$)`, 0),
+			Pattern: regexp2.MustCompile(_RAW_SYNTAX, 0),
 		},
 	})
 	e := lc.NewEngine(system.StringResType, []string{"main"}, true, p)
@@ -67,8 +69,4 @@ func TemplateReplace(
 	}
 	res, _ := engine.Generator.GetStringRes("")
 	return res, nil
-}
-
-func main() {
-	cli()
 }
