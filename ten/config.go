@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/pt-main/lc/parsing"
 	"github.com/pt-main/lc/system"
 )
@@ -14,9 +16,11 @@ func (l *Language) config_parse(e *system.Engine, pn parsing.ParsedNode) error {
 		return err
 	}
 	for _, parsed := range res {
-		cmd := parsed.Metadata["command"].(string)
-		args := parsed.Metadata["args"].(string)
-		l.config[cmd] = l.replaceAll(args)
+		if strings.TrimSpace(parsed.Metadata["__raw"].(string)) != "" {
+			cmd := parsed.Metadata["command"].(string)
+			args := parsed.Metadata["args"].(string)
+			l.config[cmd] = l.replaceAll(args)
+		}
 	}
 	return nil
 }

@@ -2,6 +2,7 @@ package main
 
 import "slices"
 
+// Structure of TemplateLanguage
 type Language struct {
 	flags          []string
 	templateSource map[string]string
@@ -9,6 +10,7 @@ type Language struct {
 	logic_scope    map[string]bool
 }
 
+// Create new template language
 func NewLanguage(
 	flags []string,
 	templateSource map[string]string,

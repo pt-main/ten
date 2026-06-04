@@ -13,15 +13,16 @@
     logic not logic hasPtAcc = hasPtAcc
 	compare name == >Tim = isTim
 	bool isPt or isTim = isCreator
+	bool hasPtAcc and isCreator = hasPtAcc
 	// ===== placing =====
 	place >evening if evening else >day = bl1
 	place name if has name else >User = bl2
 	place /star if vip = bl3
 	place >\s( if logic isCreator = bl4
 	place >hello,\screator if logic isCreator = bl5
-    place >\son\s if logic hasPtAcc = bl5.1
+    place >\son\s' if logic hasPtAcc = bl5.1
     place ptAcc if logic hasPtAcc = bl5.2
-    place >\saccount if logic hasPtAcc = bl5.3
+    place >'\saccount if logic hasPtAcc = bl5.3
 	place >? if logic isTim = bl6
 	place >! if logic isPt = bl7 
 	place >) if logic isCreator = bl8

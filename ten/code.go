@@ -32,6 +32,44 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 		args := parsed.Metadata["args"].(string)
 		raw = parsed.Metadata["__raw"].(string)
 		argsplit := strings.Split(args, " ")
+		arglenNotIs := func(length int, optype string) bool {
+			arglen := len(argsplit)
+			_err := "invalid length: " + strconv.Itoa(arglen)
+			if optype == "eq" {
+				if arglen != length {
+					err_text = (_err + " (must be " + strconv.Itoa(length) + ")")
+					return true
+				}
+			} else if optype == "less" {
+				if arglen >= length {
+					err_text = (_err + " (must be less than " + strconv.Itoa(length) + ")")
+					return true
+				}
+			} else {
+				if arglen <= length {
+					err_text = (_err + " (must be more than " + strconv.Itoa(length) + ")")
+					return true
+				}
+			}
+			return false
+		}
+		findSet := func() int {
+			set := -1
+			for idx, block := range argsplit {
+				if block == "=" {
+					set = idx
+				}
+			}
+			if set == -1 || set == 0 {
+				err_text = "has no '=' symbol or incorrect position"
+				return -1
+			}
+			if set+1 >= len(argsplit) {
+				err_text = "missing target variable after '='"
+				return -1
+			}
+			return set
+		}
 		// MARK: writing
 		if write_to != "" {
 			raw := parsed.Metadata["__raw"].(string)
@@ -44,14 +82,11 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			// MARK: comment and logic
 		} else if strings.HasPrefix(cmd, l.config["comment"]) {
 		} else if cmd == "logic" {
-			set := -1
-			for idx, block := range argsplit {
-				if block == "=" {
-					set = idx
-				}
+			if arglenNotIs(2, "more") {
+				goto err_label
 			}
+			set := findSet()
 			if set == -1 {
-				err_text = "has no '=' symbol or incorrect position"
 				goto err_label
 			}
 			res, _, err := l.parseLogic(argsplit)
@@ -61,6 +96,9 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			l.logic_scope[argsplit[set+1]] = res
 			// MARK: set
 		} else if cmd == "set" {
+			if arglenNotIs(2, "more") {
+				goto err_label
+			}
 			if argsplit[1] != "=" {
 				err_text = "has no '=' symbol or incorrect position"
 				goto err_label
@@ -74,14 +112,14 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			}
 			// MARK: bool
 		} else if cmd == "bool" {
-			if len(argsplit) != 5 {
-				err_text = "invalid length"
+			if arglenNotIs(5, "eq") {
 				goto err_label
 			}
 			arg1, ok1 := l.logic_scope[argsplit[0]]
 			arg2, ok2 := l.logic_scope[argsplit[2]]
 			if !ok1 || !ok2 {
-				return errors.New("Can't find argument in logic scope")
+				err_text = "Can't find argument in logic scope"
+				goto err_label
 			}
 			if argsplit[3] != "=" {
 				err_text = "has no '=' symbol or incorrect position"
@@ -102,14 +140,11 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			l.logic_scope[argsplit[4]] = res
 			// MARK: place
 		} else if cmd == "place" {
-			set := -1
-			for idx, val := range argsplit {
-				if val == "=" {
-					set = idx
-				}
+			if arglenNotIs(2, "more") {
+				goto err_label
 			}
+			set := findSet()
 			if set == -1 {
-				err_text = "has no '=' symbol or incorrect position"
 				goto err_label
 			}
 			placeholder, err := l.placeholderEval(strings.Join(argsplit[:set], " "))
@@ -122,6 +157,11 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 		} else if cmd == "print" {
 			fmt.Print(l.replaceAll(strings.TrimSpace(args)))
 		} else if cmd == "printv" {
+			if arglenNotIs(0, "more") {
+				goto err_label
+			} else if arglenNotIs(3, "less") {
+				goto err_label
+			}
 			arg := ""
 			if len(argsplit) > 1 {
 				arg = argsplit[1]
@@ -144,6 +184,9 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			}
 			// MARK: compare
 		} else if cmd == "compare" {
+			if arglenNotIs(5, "eq") {
+				goto err_label
+			}
 			arg1 := l.processValue(argsplit[0])
 			arg2 := l.processValue(argsplit[2])
 			if argsplit[3] != "=" {
@@ -164,12 +207,10 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			}
 			// MARK: add
 		} else if cmd == "add" {
-			set := -1
-			for idx, val := range argsplit {
-				if val == "=" {
-					set = idx
-				}
+			if arglenNotIs(3, "more") {
+				goto err_label
 			}
+			set := findSet()
 			if set == -1 {
 				goto err_label
 			}
@@ -180,6 +221,9 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 			}
 			// MARK: make
 		} else if cmd == "make" {
+			if arglenNotIs(4, "eq") {
+				goto err_label
+			}
 			op := argsplit[0]
 			arg := l.processValue(argsplit[1])
 			if argsplit[2] != "=" {
@@ -220,6 +264,7 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 				goto err_label
 			}
 		} else if cmd != "" {
+			err_text = "unknown command '" + cmd + "'"
 			goto err_label
 		}
 	}
