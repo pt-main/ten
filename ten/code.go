@@ -73,14 +73,14 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 		// MARK: writing
 		if write_to != "" {
 			raw := parsed.Metadata["__raw"].(string)
-			if !strings.HasSuffix(raw, l.config["string_end"]) {
+			if !strings.HasSuffix(raw, l.Config["string_end"]) {
 				l.templateSource[write_to] += "\n" + raw
 			} else {
-				l.templateSource[write_to] += "\n" + raw[:len(raw)-len(l.config["string_end"])]
+				l.templateSource[write_to] += "\n" + raw[:len(raw)-len(l.Config["string_end"])]
 				write_to = ""
 			}
 			// MARK: comment and logic
-		} else if strings.HasPrefix(cmd, l.config["comment"]) {
+		} else if strings.HasPrefix(cmd, l.Config["comment"]) {
 		} else if cmd == "logic" {
 			if arglenNotIs(2, "more") {
 				goto err_label
@@ -104,9 +104,9 @@ func (l *Language) code(e *system.Engine, pn parsing.ParsedNode) error {
 				goto err_label
 			}
 			param := argsplit[0]
-			if strings.HasPrefix(argsplit[2], l.config["string_start"]) {
+			if strings.HasPrefix(argsplit[2], l.Config["string_start"]) {
 				write_to = param
-				l.templateSource[param] = strings.Join(argsplit[2:], " ")[len(l.config["string_start"]):]
+				l.templateSource[param] = strings.Join(argsplit[2:], " ")[len(l.Config["string_start"]):]
 			} else {
 				l.templateSource[param] = strings.Join(argsplit[2:], " ")
 			}

@@ -65,9 +65,9 @@ func (l *Language) processValue(what string) string {
 	post := ""
 	data := ""
 	_what := what
-	pre_plus := l.config["pre_plus"]
-	post_plus := l.config["post_plus"]
-	raw := l.config["raw"]
+	pre_plus := l.Config["pre_plus"]
+	post_plus := l.Config["post_plus"]
+	raw := l.Config["raw"]
 	if strings.HasPrefix(strings.ToLower(what), raw) {
 		data = l.replaceAll(what[len(raw):])
 	} else {

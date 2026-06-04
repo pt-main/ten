@@ -38,7 +38,7 @@ invalid:
 }
 
 func (l *Language) placeholderIf(data []string) (string, error) {
-	if l.config["ALPHA"] != "" {
+	if l.Config["ALPHA"] != "" {
 		result := ""
 		_res := data
 		for len(_res) > 1 {
@@ -84,7 +84,7 @@ func (l *Language) placeholderEval(_data string) (string, error) {
 			for i := 0; i < iters; i++ {
 				result += l.processValue(data[0])
 			}
-			return l.config["raw"] + result, nil
+			return l.Config["raw"] + result, nil
 		default:
 			goto invalid
 		}

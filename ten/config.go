@@ -19,7 +19,7 @@ func (l *Language) config_parse(e *system.Engine, pn parsing.ParsedNode) error {
 		if strings.TrimSpace(parsed.Metadata["__raw"].(string)) != "" {
 			cmd := parsed.Metadata["command"].(string)
 			args := parsed.Metadata["args"].(string)
-			l.config[cmd] = l.replaceAll(args)
+			l.Config[cmd] = l.replaceAll(args)
 		}
 	}
 	return nil

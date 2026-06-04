@@ -77,6 +77,6 @@ func docs_handler(parser *tap.Parser, args []string) error {
 	if err != nil {
 		return err
 	}
-	println(lang.config["documentation"])
+	println(lang.Config["documentation"])
 	return nil
 }

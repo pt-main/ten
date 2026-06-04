@@ -6,7 +6,7 @@ import "slices"
 type Language struct {
 	flags          []string
 	templateSource map[string]string
-	config         map[string]string
+	Config         map[string]string
 	logic_scope    map[string]bool
 }
 
@@ -47,7 +47,7 @@ func NewLanguage(
 	return &Language{
 		flags:          flags,
 		templateSource: templateSource,
-		config:         config,
+		Config:         config,
 		logic_scope:    map[string]bool{"false": false, "true": true},
 	}, nil
 }
