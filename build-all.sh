@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd src
+cd lib
 
 NAME="ten"
 VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev")
