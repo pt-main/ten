@@ -1,0 +1,33 @@
+((?
+	pre_plus /
+	raw >
+	documentation test documentation
+	ALPHA true
+)){{?
+	set star = (⭐)
+	// ===== logics =====
+    make lower name = name_lower
+	compare name_lower startswith >pt = isPt
+    make slice_s:3 name = ptAcc
+    compare ptAcc == nil = hasPtAcc
+    logic not logic hasPtAcc = hasPtAcc
+	compare name == >Tim = isTim
+	bool isPt or isTim = isCreator
+	// ===== placing =====
+	place >evening if evening else >day = bl1
+	place name if has name else >User = bl2
+	place /star if vip = bl3
+	place >\s( if logic isCreator = bl4
+	place >hello,\screator if logic isCreator = bl5
+    place >\son\s if logic hasPtAcc = bl5.1
+    place ptAcc if logic hasPtAcc = bl5.2
+    place >\saccount if logic hasPtAcc = bl5.3
+	place >? if logic isTim = bl6
+	place >! if logic isPt = bl7 
+	place >) if logic isCreator = bl8
+	place >\n if has message = bl9
+	// ===== summing =====
+	add >Good\s bl1 >,\s[ bl2 >] bl3 >! bl4 bl5 bl5.1 bl5.2 bl5.3 bl6 bl7 bl8 bl9 message = blocks
+}}[[? >[ if has sep ]][[? sep for 40 ]][[? >] if has sep ]][[? >\n if has sep ]][[? 
+blocks ]][[? >\n if has sep ]][[? >[ if has sep ]][[? sep for 40 ]][[? >] if has sep ]][[?
+>\n if not __hasOut ]]
