@@ -1,3 +1,7 @@
+# Imortant
+Now manual project build is breaked (lc version is bad), version 2 comming soon.
+All files from `cmd/bin/` or from last release (0.9.2) works.
+
 # Ten
 
 A powerful template engine with expressive syntax and full programmatic control. Use it as a standalone CLI tool or integrate it into your Go applications.
